@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nomad Children Teaching App</title>
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .login-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffffff;
+        }
+
+        .form {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .form h2 {
+            margin-bottom: 20px;
+        }
+
+        .form input {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .form button {
+            padding: 10px 20px;
+            background-color: #ff9800;
+            border: none;
+            border-radius: 4px;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        .app {
+            padding: 20px;
+            display: none;
+        }
+
+        header {
+            background-color: #ff9800;
+            color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        header p {
+            margin: 10px 0;
+        }
+
+        header button {
+            padding: 10px 20px;
+            background-color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            color: #ff9800;
+            cursor: pointer;
+        }
+
+        .menubar {
+            margin-bottom: 20px;
+        }
+
+        .menubar ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: space-around;
+            background-color: #ffffff;
+            padding: 10px 0;
+        }
+
+        .menubar li {
+            display: inline;
+        }
+
+        .menubar a {
+            text-decoration: none;
+            color: #ff9800;
+            padding: 10px 20px;
+            border-radius: 4px;
+        }
+
+        .menubar a:hover {
+            background-color: #ff9800;
+            color: #ffffff;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .options button {
+            padding: 10px 20px;
+            background-color: #ff9800;
+            border: none;
+            border-radius: 4px;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        .popular, .section {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .popular h2, .section h2 {
+            margin: 0 0 20px 0;
+        }
+
+        .story, .lesson {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .story img.thumbnail, .lesson img.thumbnail {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            margin-right: 20px;
+        }
+
+        .story h3, .lesson h3, .story h4, .lesson h4 {
+            margin: 0;
+        }
+
+        .story p, .lesson p {
+            margin: 5px 0;
+        }
+
+        .story button, .lesson button {
+            padding: 10px 20px;
+            background-color: #ff9800;
+            border: none;
+            border-radius: 4px;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        section {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .profile {
+            text-align: center;
+        }
+
+        .profile-photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #ff9800;
+            border: none;
+            border-radius: 4px;
+            color: #ffffff;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .chart {
+            margin-bottom: 20px;
+        }
+
+        .bar-chart {
+            display: flex;
+            gap: 10px;
+            height: 100px;
+        }
+
+        .bar {
+            width: 20%;
+            background-color: #ff9800;
+            border-radius: 4px;
+        }
+
+        .pie-chart {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: conic-gradient(#ff9800 0% 50%, #ffcc80 50% 80%, #ffe0b2 80%);
+            margin: 0 auto;
+        }
+
+        .streak {
+            text-align: center;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div class="login-page" id="login-page">
+        <div class="form">
+            <h2>Login</h2>
+            <input type="text" id="username" placeholder="Username" />
+            <input type="password" id="password" placeholder="Password" />
+            <button onclick="login()">Login</button>
+        </div>
+    </div>
+
+    <!-- Application Page -->
+    <div class="app" id="app" style="display: none;">
+        <header>
+            <nav class="menubar">
+                <ul>
+                    <li><a href="#" onclick="showSection('profile')">Profile</a></li>
+                    <li><a href="#" onclick="showSection('settings')">Settings</a></li>
+                    <li><a href="#" onclick="showSection('lessons')">Lessons</a></li>
+                    <li><a href="#" onclick="showSection('stories')">Stories</a></li>
+                    <li><a href="#" onclick="showSection('statistics')">Statistics</a></li>
+                    <li><a href="#" onclick="showSection('feedback')">Feedback</a></li>
+                </ul>
+            </nav>
+            <h1>Good Evening!</h1>
+            <p>Children's Education</p>
+            <button onclick="learnMore()">Learn More</button>
+        </header>
+
+        <main>
+            <section id="home">
+                <h2>Welcome!</h2>
+                <div class="section">
+                    <h3>Lessons</h3>
+                    <!-- Lessons here -->
+                    <div class="lesson">
+                        <img src="images/lesson1.jpg" alt="Lesson 1" class="thumbnail">
+                        <h4>Lesson Title 1</h4>
+                    </div>
+                    <div class="lesson">
+                        <img src="images/lesson2.jpg" alt="Lesson 2" class="thumbnail">
+                        <h4>Lesson Title 2</h4>
+                    </div>
+                    <!-- More lessons... -->
+                </div>
+
+                <div class="section">
+                    <h3>Games</h3>
+                    <!-- Games here -->
+                    <div class="story">
+                        <img src="images/game1.jpg" alt="Game 1" class="thumbnail">
+                        <h4>Game Title 1</h4>
+                    </div>
+                    <div class="story">
+                        <img src="images/game2.jpg" alt="Game 2" class="thumbnail">
+                        <h4>Game Title 2</h4>
+                    </div>
+                    <!-- More games... -->
+                </div>
+            </section>
+
+            <section id="profile" class="hidden">
+                <h2>Profile</h2>
+                <div class="profile">
+                    <img src="images/profile.jpg" alt="User Photo" class="profile-photo">
+                    <h3>User Name</h3>
+                    <p>Email: user@example.com</p>
+                    <p>Age: 10</p>
+                </div>
+            </section>
+
+            <section id="settings" class="hidden">
+                <h2>Settings</h2>
+                <p>Adjust your preferences and settings.</p>
+                <button onclick="logout()">Logout</button>
+                <button onclick="viewProgress()">View Progress</button>
+            </section>
+
+            <section id="lessons" class="hidden">
+                <h2>Lessons</h2>
+                <p>Access your lessons and learning materials.</p>
+                <div class="lesson">
+                    <img src="images/lesson1.jpg" alt="Lesson 1" class="thumbnail">
+                    <h3>Lesson Title 1</h3>
+                    <p>Description of lesson 1</p>
+                    <button>Start Lesson</button>
+                </div>
+                <div class="lesson">
+                    <img src="images/lesson2.jpg" alt="Lesson 2" class="thumbnail">
+                    <h3>Lesson Title 2</h3>
+                    <p>Description of lesson 2</p>
+                    <button>Start Lesson</button>
+                </div>
+            </section>
+
+            <section id="stories" class="hidden">
+                <h2>Stories</h2>
+                <p>Explore and read various stories.</p>
+                <div class="story">
+                    <img src="images/hansel-gretel.jpg" alt="Hansel and Gretel" class="thumbnail">
+                    <h3>Hansel and Gretel</h3>
+                    <p>Suitable for 5 - 12 years old</p>
+                    <button>Free</button>
+                </div>
+                <div class="story">
+                    <img src="images/poor-pluto.jpg" alt="POOR PLUTO!" class="thumbnail">
+                    <h3>POOR PLUTO!</h3>
+                    <p>Suitable for 6 - 9 years old</p>
+                    <button>Prime</button>
+                </div>
+            </section>
+
+            <section id="statistics" class="hidden">
+                <h2>Statistics</h2>
+                <p>View your learning progress and statistics.</p>
+                <div class="chart">
+                    <h3>Progress Over Time</h3>
+                    <div class="bar-chart">
+                        <div class="bar" style="height: 50%;"></div>
+                        <div class="bar" style="height: 75%;"></div>
+                        <div class="bar" style="height: 100%;"></div>
+                        <div class="bar" style="height: 60%;"></div>
+                    </div>
+                </div>
+                <div class="chart">
+                    <h3>Lesson Completion</h3>
+                    <div class="pie-chart">
+                        <div class="slice" style="--percentage: 50;"></div>
+                        <div class="slice" style="--percentage: 30;"></div>
+                        <div class="slice" style="--percentage: 20;"></div>
+                    </div>
+                </div>
+                <div class="streak">
+                    <h3>Current Streak</h3>
+                    <p>5 days 🔥</p>
+                </div>
+            </section>
+
+            <section id="feedback" class="hidden">
+                <h2>Feedback</h2>
+                <p>Provide your feedback.</p>
+                <textarea id="feedbackText" placeholder="Write your feedback here..."></textarea>
+                <button>Submit</button>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById(sectionId).classList.remove('hidden');
+        }
+
+        function login() {
+            // Dummy login functionality for demonstration
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('app').style.display = 'block';
+        }
+
+        function learnMore() {
+            alert("Learn more about the Nomad Children Teaching App!");
+        }
+
+        function logout() {
+            // Dummy logout functionality
+            document.getElementById('app').style.display = 'none';
+            document.getElementById('login-page').style.display = 'flex';
+        }
+
+        function viewProgress() {
+            alert("View progress functionality to be implemented.");
+        }
+    </script>
+</body>
+</html>
